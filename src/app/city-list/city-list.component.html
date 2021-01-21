@@ -1,19 +1,10 @@
-<ul>
-    <h3>Cities:</h3>
-    <li *ngFor="let city of cities">
-        {{ city.cityname }}
-    </li>
-</ul>
-
-<form>
-    <mat-form-field>
-        <mat-label>City name</mat-label>
-        <input matInput #cityName placeholder="City name" />
-    </mat-form-field>
-    <button mat-raised-button color="primary" (click)="addCity(cityName.value); cityName.value=''">
-        Add
+<mat-tab-group>
+    <span  *ngFor="let city of cities">
+        <mat-tab label="{{city.cityname}}">
+            <app-city [city]="city"></app-city>
+        </mat-tab>
+    </span>
+    <button mat-raised-button color="primary" (click)="logout()">
+        Logout
     </button>
-</form>
-<button mat-raised-button color="primary" (click)="logout()">
-    Logout
-</button>
+</mat-tab-group>

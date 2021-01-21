@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { City } from '../city';
 import { CityService } from '../city.service';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { AddCityDialogComponent } from '../add-city-dialog/add-city-dialog.component';
 
 @Component({
   selector: 'app-city-list',
@@ -13,11 +15,23 @@ export class CityListComponent implements OnInit {
 
   constructor(
     private cityService: CityService,
-    private authService: AuthService
+    private authService: AuthService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
     this.getCities();
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AddCityDialogComponent, {
+      width: '250px'
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(_ => {
+        this.getCities();
+      })
   }
 
   private getCities(): void {
@@ -25,19 +39,6 @@ export class CityListComponent implements OnInit {
       .subscribe(cities => {
         this.cities = cities;
       });
-  }
-
-  addCity(cityname: string): void {
-    cityname = cityname.trim();
-    if (!cityname) {
-      return;
-    }
-
-    this.cityService.addCity({ cityname } as City)
-      .subscribe(_ => {
-        console.log('city added');
-        this.getCities();
-      })
   }
 
   logout(): void {

@@ -1,1 +1,10 @@
-<p>city works!</p>
+<div *ngIf="city">
+    <h2>{{city.cityname}}</h2>
+    <div *ngIf="city.main">
+        <h4>{{city.main.temp}}</h4>
+        <h4>{{city.main.humidity}}</h4>
+        <h4>{{city.main.pressure}}</h4>
+        <h4>{{city.wind.speed}}</h4>
+        <h4>{{degToCompass(city.wind.deg)}}</h4>
+    </div>
+</div>
