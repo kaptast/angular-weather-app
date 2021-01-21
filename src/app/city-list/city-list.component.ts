@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { City } from '../city';
 import { CityService } from '../city.service';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AddCityDialogComponent } from '../add-city-dialog/add-city-dialog.component';
 
 @Component({
@@ -11,7 +11,6 @@ import { AddCityDialogComponent } from '../add-city-dialog/add-city-dialog.compo
   styleUrls: ['./city-list.component.css']
 })
 export class CityListComponent implements OnInit {
-  cities: City[];
 
   constructor(
     private cityService: CityService,
@@ -21,6 +20,10 @@ export class CityListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCities();
+  }
+
+  cities(): City[] {
+    return this.cityService.cities;
   }
 
   openDialog(): void {
@@ -35,12 +38,8 @@ export class CityListComponent implements OnInit {
   }
 
   private getCities(): void {
-    this.cityService.getCities()
-      .subscribe(cities => {
-        this.cities = cities;
-      });
+    this.cityService.getCities();
   }
-
   logout(): void {
     this.authService.logout().subscribe();
   }

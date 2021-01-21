@@ -1,13 +1,19 @@
-<mat-tab-group>
-    <span  *ngFor="let city of cities">
-        <mat-tab label="{{city.cityname}}">
+<div class="app-bar">
+    <mat-tab-group class="tab-bar">
+        <mat-tab *ngFor="let city of cities()" label="{{city.cityname}}">
             <app-city [city]="city"></app-city>
         </mat-tab>
-    </span>
-</mat-tab-group>
-<button mat-raised-button color="primary" (click)="openDialog()">
-    Add City
-</button>
-<button mat-raised-button color="primary" (click)="logout()">
-    Logout
-</button>
+        <mat-tab *ngIf="cities()" disable>
+            <ng-template mat-tab-label>
+                <button mat-icon-button (click)="openDialog()">
+                    <mat-icon>
+                        add_circle
+                    </mat-icon>
+                </button>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+    <button class="logout" mat-button (click)="logout()">
+        Logout
+    </button>
+</div>

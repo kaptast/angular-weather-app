@@ -1,0 +1,13 @@
+.app-bar {
+    display: inline-flex;
+}
+
+.tab-bar {
+    width: 92vw;
+}
+
+.logout {
+    right: 15px;
+    height: 49px;
+    border-bottom: 1px solid rgba(0,0,0,.12);
+}
