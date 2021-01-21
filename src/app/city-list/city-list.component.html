@@ -1,1 +1,19 @@
-<p>city-list works!</p>
+<ul>
+    <h3>Cities:</h3>
+    <li *ngFor="let city of cities">
+        {{ city.cityname }}
+    </li>
+</ul>
+
+<form>
+    <mat-form-field>
+        <mat-label>City name</mat-label>
+        <input matInput #cityName placeholder="City name" />
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="addCity(cityName.value); cityName.value=''">
+        Add
+    </button>
+</form>
+<button mat-raised-button color="primary" (click)="logout()">
+    Logout
+</button>
