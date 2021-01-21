@@ -13,7 +13,7 @@ import { MaterialModule } from './material/material.module';
 import { AppConfigService } from './app-config.service';
 import { AuthService } from './auth.service';
 import { LoginComponent } from './login/login.component';
-import { DatabaseService } from './database.service';
+import { AddCityDialogComponent } from './add-city-dialog/add-city-dialog.component';
 
 const dbConfig: DBConfig = {
   name: 'weather-app-db',
@@ -38,7 +38,8 @@ const dbConfig: DBConfig = {
     AppComponent,
     CityComponent,
     CityListComponent,
-    LoginComponent
+    LoginComponent,
+    AddCityDialogComponent
   ],
   imports: [
     BrowserModule,

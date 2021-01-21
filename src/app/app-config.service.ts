@@ -23,7 +23,7 @@ export class AppConfigService {
   }
 
   // Gets the Base API url set in config.json
-  get weatherApiKey() {
+  weatherApiKey() {
     if (!this.appConfig) {
       throw Error('Config file not loaded!');
     }
