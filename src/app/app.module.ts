@@ -14,6 +14,7 @@ import { AppConfigService } from './app-config.service';
 import { AuthService } from './auth.service';
 import { LoginComponent } from './login/login.component';
 import { AddCityDialogComponent } from './add-city-dialog/add-city-dialog.component';
+import { GaugeComponent } from './gauge/gauge.component';
 
 const dbConfig: DBConfig = {
   name: 'weather-app-db',
@@ -39,7 +40,8 @@ const dbConfig: DBConfig = {
     CityComponent,
     CityListComponent,
     LoginComponent,
-    AddCityDialogComponent
+    AddCityDialogComponent,
+    GaugeComponent
   ],
   imports: [
     BrowserModule,

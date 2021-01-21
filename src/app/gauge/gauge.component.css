@@ -1,0 +1,9 @@
+.valueContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.gauge {
+    justify-content: center;
+}

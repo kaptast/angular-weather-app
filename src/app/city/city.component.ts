@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { City } from '../city';
 import { CityService } from '../city.service';
+import { Gauge } from '../gauge';
 
 @Component({
   selector: 'app-city',
@@ -22,15 +23,12 @@ export class CityComponent implements OnInit {
   private getCityData(): void {
     this.cityService.getCityData(this.city.cityname)
       .subscribe(data => {
-        this.city.main = { 
-          temp: data.main.temp,
-          humidity: data.main.humidity,
-          pressure: data.main.pressure
-        };
-        this.city.wind = {
-          speed: data.wind.speed,
-          deg: data.wind.deg
-        }
+        this.city.gauges = [];
+        this.city.gauges.push(new Gauge(data.main.temp, 'Temperature', '°C'));
+        this.city.gauges.push(new Gauge(data.main.humidity, 'Humidity', '%'));
+        this.city.gauges.push(new Gauge(data.main.pressure, 'Pressure', 'hPa'));
+        this.city.gauges.push(new Gauge(data.wind.speed, 'Wind speed', 'm/s'));
+        this.city.gauges.push(new Gauge(this.degToCompass(data.wind.deg), 'Wind direction', ''));
       })
   }
 
