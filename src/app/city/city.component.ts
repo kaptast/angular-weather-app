@@ -22,8 +22,6 @@ export class CityComponent implements OnInit {
   private getCityData(): void {
     this.cityService.getCityData(this.city.cityname)
       .subscribe(data => {
-        console.log(data);
-        console.log(data.main.temp);
         this.city.main = { 
           temp: data.main.temp,
           humidity: data.main.humidity,
@@ -36,8 +34,8 @@ export class CityComponent implements OnInit {
       })
   }
 
-  delete(): void {
-
+  deleteCity(): void {
+    this.cityService.delete(this.city.id)
   }
 
   degToCompass(num: number) {
