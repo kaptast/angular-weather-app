@@ -1,70 +1,37 @@
 import { Injectable } from '@angular/core';
-import { openDB } from 'idb';
+import { NgxIndexedDBService, DBConfig } from 'ngx-indexed-db';
 import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { City } from './city';
 import { User } from './user';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class DatabaseService {
 
-  constructor() { }
+  constructor(
+    private dbService: NgxIndexedDBService
+  ) { }
 
-  configurateDatabase(): void {
-    openDB('weather_db', 1, {
-      upgrade(db) {
-        const userStore = db.createObjectStore('users', { keyPath: 'id', autoIncrement: true });
-        userStore.createIndex('username', 'username', { unique: true });
-
-        const cityStore = db.createObjectStore('cities', { keyPath: 'id', autoIncrement: true });
-        cityStore.createIndex('userid', 'userid');
-      }
+  addUser(username: string, hashedPassword: string): Observable<number> {
+    return this.dbService.add('users', {
+      username: username,
+      password: hashedPassword
     })
   }
 
-  async registerUser(user: User): Promise<void> {
-    const db = await openDB('weather_db', 1);
-
-    db.add('users', user)
-      .catch(console.error);
+  getUser(username: string): Observable<User> {
+    return this.dbService.getByIndex('users', 'username', username);
+    //return this.dbService.getAll('users');
   }
 
-  async getUser(username: string): Promise<Observable<User>> {
-    const db = await openDB('weather_db', 1);
-
-    db.getAllFromIndex('users', 'username', username)
-      .then(user => {
-        return user;
-      })
-      .catch(console.error);
-
-    return of(null); 1
+  addCity(city: City): Observable<any> {
+    return this.dbService.add('cities', city);
   }
 
-  async addCity(city: City): Promise<void> {
-    const db = await openDB('weather_db', 1);
-
-    db.add('cities', city)
-      .catch(console.error);
-  }
-
-  async deleteCity(cityId: number): Promise<void> {
-    const db = await openDB('weather_db', 1);
-
-    db.delete('cities', cityId)
-      .catch(console.error);
-  }
-
-  async getCities(userid: number): Promise<Observable<City[]>> {
-    const db = await openDB('weather_db', 1);
-
-    await db.getAllFromIndex('cities', 'userid', userid)
-      .then(userCities => {
-        return userCities;
-      })
-      .catch(console.error);
-
-    return of([]);
+  getCities(userid: string): Observable<City[]> {
+    return this.dbService.getAllByIndex('cities', 'userid', IDBKeyRange.only(userid));
   }
 }

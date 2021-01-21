@@ -7,23 +7,46 @@ import { AppComponent } from './app.component';
 import { CityComponent } from './city/city.component';
 import { CityListComponent } from './city-list/city-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxIndexedDBModule, DBConfig } from 'ngx-indexed-db';
 
 import { MaterialModule } from './material/material.module';
 import { AppConfigService } from './app-config.service';
 import { AuthService } from './auth.service';
+import { LoginComponent } from './login/login.component';
+import { DatabaseService } from './database.service';
+
+const dbConfig: DBConfig = {
+  name: 'weather-app-db',
+  version: 1,
+  objectStoresMeta: [{
+    store: 'users',
+    storeConfig: { keyPath: 'id', autoIncrement: true },
+    storeSchema: [
+      { name: 'username', keypath: 'username', options: { unique: true } }
+    ]
+  }, {
+    store: 'cities',
+    storeConfig: { keyPath: 'id', autoIncrement: true },
+    storeSchema: [
+      { name: 'userid', keypath: 'userid', options: { unique: false } }
+    ]
+  }]
+};
 
 @NgModule({
   declarations: [
     AppComponent,
     CityComponent,
-    CityListComponent
+    CityListComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxIndexedDBModule.forRoot(dbConfig)
   ],
   providers: [
     {
@@ -38,8 +61,10 @@ import { AuthService } from './auth.service';
         authService: AuthService
       ) => {
         return() => {
+          console.log('init');
           return appConfigService.loadAppConfig()
             .then(() => authService.checkLogin());
+            
         }
       }
     }

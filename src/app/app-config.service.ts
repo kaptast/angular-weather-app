@@ -12,6 +12,8 @@ export class AppConfigService {
   // Loads the config.json
   // Runs at app initialization
   loadAppConfig() {
+    console.log('Getting config');
+    
     return this.http.get('/assets/config.json')
       .toPromise()
       .then(data => {
