@@ -4,6 +4,7 @@ import { map, catchError } from 'rxjs/operators';
 import { DatabaseService } from './database.service';
 import { User } from './user';
 import { sha512 } from 'js-sha512';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class AuthService {
   isLoggenIn: boolean = false;
 
   constructor(
-    private databaseService: DatabaseService
+    private databaseService: DatabaseService,
+    private snackBar: MatSnackBar
   ) { }
 
   checkLogin() {
@@ -46,6 +48,7 @@ export class AuthService {
             this.isLoggenIn = true;
             this.setSession(user.id);
           } else {
+            this.openSnackBar();
             this.removeSession();
             this.isLoggenIn = false;
           }
@@ -94,5 +97,12 @@ export class AuthService {
     }
 
     return result;
+  }
+
+  private openSnackBar(): void {
+    this.snackBar.open('Invalid credentials!', 'Close', {
+      duration: 5000,
+      panelClass: ['alert-snackbar']
+    });
   }
 }
