@@ -1,0 +1,9 @@
+<form>
+    <mat-form-field>
+        <mat-label>City name</mat-label>
+        <input matInput #cityName placeholder="City name" />
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="addCity(cityName.value); cityName.value=''">
+        Add
+    </button>
+</form>
