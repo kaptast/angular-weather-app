@@ -1,7 +1,7 @@
 export interface City {
     userid: string,
     cityname: string,
-    id: string,
+    id: number,
     main: {
         temp: number,
         humidity: number,

@@ -24,7 +24,6 @@ export class DatabaseService {
 
   getUser(username: string): Observable<User> {
     return this.dbService.getByIndex('users', 'username', username);
-    //return this.dbService.getAll('users');
   }
 
   addCity(city: City): Observable<any> {
@@ -33,5 +32,9 @@ export class DatabaseService {
 
   getCities(userid: string): Observable<City[]> {
     return this.dbService.getAllByIndex('cities', 'userid', IDBKeyRange.only(userid));
+  }
+
+  deleteCity(cityid: number): Observable<any> {
+    return this.dbService.delete('cities', cityid);
   }
 }

@@ -41,9 +41,6 @@ export class AuthService {
     this.databaseService.getUser(username)
       .subscribe(user => {
         const hashedPassword = this.hashPassword(password);
-
-        console.log(user);
-
         if (user) {
           if (user.password === hashedPassword) {
             this.isLoggenIn = true;
@@ -97,13 +94,5 @@ export class AuthService {
     }
 
     return result;
-  }
-
-  private handleError<T>(msg = 'message', result?: T) {
-    return (error: any): Observable<T> => {
-      console.log(error);
-      console.log(msg);
-      return of(result as T);
-    }
   }
 }

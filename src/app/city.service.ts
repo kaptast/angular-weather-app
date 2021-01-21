@@ -10,6 +10,7 @@ import { AppConfigService } from './app-config.service';
   providedIn: 'root'
 })
 export class CityService {
+  cities: City[];
 
   constructor(
     private dbService: DatabaseService,
@@ -18,10 +19,13 @@ export class CityService {
     private appConfigService: AppConfigService
   ) { }
 
-  getCities(): Observable<City[]> {
+  getCities(): void {
     const userid = this.authService.getUserId();
-    console.log(userid);
-    return this.dbService.getCities(userid);
+    
+    this.dbService.getCities(userid)
+      .subscribe(cities => {
+        this.cities = cities;
+      })
   }
 
   addCity(city: City): Observable<City> {
@@ -33,5 +37,12 @@ export class CityService {
   getCityData(cityname): Observable<any> {
     const url = `http://api.openweathermap.org/data/2.5/weather?q=${cityname}&units=metric&appid=${this.appConfigService.weatherApiKey()}`;
     return this.http.get(url);
+  }
+
+  delete(cityid: number): void {
+    this.dbService.deleteCity(cityid)
+      .subscribe(_ => {
+        this.getCities();
+      })
   }
 }
