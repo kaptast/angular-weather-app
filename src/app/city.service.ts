@@ -39,6 +39,11 @@ export class CityService {
     return this.http.get(url);
   }
 
+  getForecastData(cityname): Observable<any> {
+    const url = `http://api.openweathermap.org/data/2.5/forecast?q=${cityname}&units=metric&appid=${this.appConfigService.weatherApiKey()}`;
+    return this.http.get(url);
+  }
+
   delete(cityid: number): void {
     this.dbService.deleteCity(cityid)
       .subscribe(_ => {

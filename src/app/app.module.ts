@@ -8,6 +8,7 @@ import { CityComponent } from './city/city.component';
 import { CityListComponent } from './city-list/city-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxIndexedDBModule, DBConfig } from 'ngx-indexed-db';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { MaterialModule } from './material/material.module';
 import { AppConfigService } from './app-config.service';
@@ -15,6 +16,7 @@ import { AuthService } from './auth.service';
 import { LoginComponent } from './login/login.component';
 import { AddCityDialogComponent } from './add-city-dialog/add-city-dialog.component';
 import { GaugeComponent } from './gauge/gauge.component';
+import { CityChartComponent } from './city-chart/city-chart.component';
 
 const dbConfig: DBConfig = {
   name: 'weather-app-db',
@@ -41,7 +43,8 @@ const dbConfig: DBConfig = {
     CityListComponent,
     LoginComponent,
     AddCityDialogComponent,
-    GaugeComponent
+    GaugeComponent,
+    CityChartComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +52,7 @@ const dbConfig: DBConfig = {
     MaterialModule,
     FormsModule,
     HttpClientModule,
+    NgxChartsModule,
     NgxIndexedDBModule.forRoot(dbConfig)
   ],
   providers: [
